@@ -348,7 +348,8 @@
     position: relative;
     overflow: hidden;
   }
-  .hero-deco { position: absolute; inset: 0; pointer-events: none; }
+  .hero-deco { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .hero-inner { position: relative; z-index: 2; }
   .hero-deco-circle {
     position: absolute;
     border-radius: 50%;
@@ -1029,7 +1030,7 @@
         <p>La <strong>matriz de piezas por iniciativa</strong> muestra todas las comunicaciones del sistema organizadas por iniciativa de negocio, formato y estado de implementación.</p>
         <p>Puedes filtrar por hostel, fase del journey, objetivo de negocio y estado para tener una visión clara del avance del proyecto.</p>
       </div>
-      <a href="viajero_formatos.html" class="cta-btn">Abrir Piezas por Iniciativa →</a>
+      <a href="https://marketingviajero.github.io/HubUserJourney/formatos.html" class="cta-btn">Abrir Piezas por Iniciativa →</a>
     </div>
   </div>
 </div>
