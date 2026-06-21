@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Viajero Hostels Huacachina · The Desert Has Something for You</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#E8722A;
+  --bg2:#DD6720;
+  --bg3:#C95E1C;
+  --accent:#C42E08;
+  --cream:#FFF8F5;
+  --muted:rgba(255,248,245,0.72);
+  --border:rgba(255,248,245,0.22);
+  --border2:rgba(255,248,245,0.4);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Jost',sans-serif;
+}
+html{font-size:16px}
+body{
+  background:linear-gradient(165deg,var(--bg) 0%,var(--bg2) 55%,var(--bg3) 100%);
+  color:var(--cream);font-family:var(--sans);
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2.5rem 1.25rem;position:relative;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.7;
+}
+/* sun glow top */
+body::after{
+  content:'';position:fixed;top:-25vh;left:50%;transform:translateX(-50%);
+  width:90vw;height:55vh;
+  background:radial-gradient(ellipse,rgba(255,235,210,0.22) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+
+.wrap{position:relative;z-index:1;width:100%;max-width:600px;text-align:center;}
+
+/* decorative dune shapes */
+.dune{
+  position:absolute;left:50%;transform:translateX(-50%);
+  border-radius:50%;pointer-events:none;z-index:0;
+}
+.dune-1{width:520px;height:520px;background:rgba(255,248,245,0.05);top:-260px;}
+.dune-2{width:380px;height:380px;background:rgba(255,248,245,0.06);bottom:-260px;}
+
+.content{position:relative;z-index:1;}
+
+.eyebrow{
+  font-family:var(--sans);font-weight:400;font-size:.72rem;
+  letter-spacing:.24em;text-transform:uppercase;
+  color:var(--cream);opacity:.85;margin-bottom:1.5rem;
+  display:flex;align-items:center;justify-content:center;gap:.6rem;
+  opacity:0;animation:fadeUp .6s ease .1s forwards;
+}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--cream);opacity:.7}
+
+.headline{
+  font-family:var(--serif);
+  font-size:clamp(2.1rem,7vw,3.1rem);
+  font-weight:400;line-height:1.18;color:var(--cream);
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp .7s ease .25s forwards;
+}
+.headline em{
+  font-style:italic;font-weight:500;
+  color:#FFE9D2;
+  position:relative;
+  display:inline-block;
+}
+
+.sub{
+  font-size:1rem;font-weight:300;color:var(--cream);opacity:.92;
+  line-height:1.7;max-width:440px;margin:0 auto 2.5rem;
+  opacity:0;animation:fadeUp .7s ease .4s forwards;
+}
+
+.divider-row{
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp .6s ease .55s forwards;
+}
+.divider-row::before,.divider-row::after{
+  content:'';width:48px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border2));
+}
+.divider-row::after{background:linear-gradient(90deg,var(--border2),transparent);}
+.divider-row span{
+  font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cream);opacity:.85;white-space:nowrap;
+}
+
+.cta-btn{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--cream);color:var(--accent);
+  border:none;padding:1.05rem 2.6rem;border-radius:2px;
+  font-family:var(--sans);font-size:.82rem;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;cursor:pointer;
+  transition:transform .2s,box-shadow .2s,background .2s;
+  box-shadow:0 8px 28px rgba(0,0,0,.18);
+  opacity:0;animation:fadeUp .7s ease .7s forwards;
+}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(0,0,0,.24);background:#FFEFE6;}
+.cta-btn:active{transform:translateY(0)}
+.cta-btn svg{width:16px;height:16px;}
+
+.meta-row{
+  display:flex;justify-content:center;gap:2.2rem;
+  margin-top:3rem;
+  opacity:0;animation:fadeUp .6s ease .9s forwards;
+}
+.meta-item{display:flex;flex-direction:column;align-items:center;gap:.4rem;}
+.meta-icon{font-size:1.3rem;filter:saturate(.4) brightness(1.6);}
+.meta-label{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--cream);opacity:.75;}
+
+.footer-note{
+  margin-top:3.5rem;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cream);opacity:.5;
+  opacity:0;animation:fadeUp .6s ease 1.05s forwards;
+}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@media(max-width:480px){
+  .meta-row{gap:1.4rem;flex-wrap:wrap;}
+}
+</style>
+</head>
+<body>
+
+<div class="dune dune-1"></div>
+<div class="dune dune-2"></div>
+
+<div class="wrap">
+  <div class="content">
+
+    <div class="eyebrow">
+      <span class="dot"></span>
+      Viajero Hostels · Huacachina, Peru
+      <span class="dot"></span>
+    </div>
+
+    <h1 class="headline">The desert has<br><em>something for you</em></h1>
+
+    <p class="sub">Five quick questions to find your perfect experience among the dunes of Huacachina.</p>
+
+    <div class="divider-row"><span>choose your adventure</span></div>
+
+    <button class="cta-btn" onclick="window.location.href='viajero-huacachina-quiz-en.html'">
+      <span>Start the quiz</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    </button>
+
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-icon">🏜️</span>
+        <span class="meta-label">5 questions</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-icon">⏱️</span>
+        <span class="meta-label">1 minute</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-icon">✨</span>
+        <span class="meta-label">Your match</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer-note">Viajero Hostels Huacachina</div>
+
+</body>
+</html>
