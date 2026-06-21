@@ -385,7 +385,7 @@
   .grid {
     padding: 2.5rem 3rem 4rem;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.25rem;
     max-width: 100%;
   }
@@ -876,7 +876,8 @@
       </div>
     </div>
 
-    <div class="card card--purple" onclick="openModal('hub-hostel')">\n      <div class="card-top">
+    <div class="card card--purple" onclick="openModal('hub-hostel')">
+      <div class="card-top">
         <div class="card-icon"></div>
         <div class="card-number">04</div>
       </div>
@@ -887,6 +888,23 @@
           <span class="card-tag">Dashboard</span>
           <span class="card-tag">Métricas</span>
           <span class="card-tag">Hosteles</span>
+        </div>
+        <div class="card-arrow">→</div>
+      </div>
+    </div>
+
+    <div class="card card--orange" onclick="openModal('innovaciones')">
+      <div class="card-top">
+        <div class="card-icon"></div>
+        <div class="card-number">05</div>
+      </div>
+      <div class="card-title">Innovaciones</div>
+      <div class="card-desc">Test interactivo en recepción para la compra de actividades y tours. Conoce cómo funciona y pruébalo en vivo.</div>
+      <div class="card-footer">
+        <div class="card-tags">
+          <span class="card-tag">Test</span>
+          <span class="card-tag">Recepción</span>
+          <span class="card-tag">Tours</span>
         </div>
         <div class="card-arrow">→</div>
       </div>
@@ -1050,6 +1068,29 @@
         <p>Dashboard de implementación por hostel. Mide el avance de cada propiedad en la adopción del sistema.</p>
       </div>
       <a href="https://marketingviajero.github.io/HubUserJourney/operaciones.html" class="cta-btn">Abrir Hub por Hostel →</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: Innovaciones -->
+<div class="overlay" id="overlay-innovaciones" onclick="closeOnOverlay(event,'innovaciones')">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-eyebrow">05 · Innovación en recepción</div>
+        <div class="modal-title">Test de Actividades y Tours</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('innovaciones')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-bottom:1rem; color:rgba(255,255,255,0.7); font-size:0.9rem; line-height:1.6;">
+        Un test interactivo pensado para recepción: en menos de un minuto, el huésped responde unas preguntas rápidas y descubre qué actividades y tours combinan mejor con él. Mira cómo se usa y pruébalo tú misma.
+      </p>
+      <video controls preload="metadata" style="width:100%; border-radius:12px; display:block; margin-bottom:1.5rem; background:#000;">
+        <source src="viajero-innovaciones-demo.mp4" type="video/mp4">
+        Tu navegador no soporta el video. <a href="viajero-innovaciones-demo.mp4">Descárgalo aquí</a>.
+      </video>
+      <a href="viajero-huacachina-landing.html" target="_blank" class="cta-btn">Probar el test →</a>
     </div>
   </div>
 </div>
