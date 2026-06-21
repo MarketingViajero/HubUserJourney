@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Viajero Hostels Huacachina · Find Your Experience</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#E8722A;--bg2:#DD6720;--bg3:#C95E1C;
+  --accent:#C42E08;--cream:#FFF8F5;
+  --muted:rgba(255,248,245,0.72);
+  --border:rgba(255,248,245,0.22);--border2:rgba(255,248,245,0.4);
+  --serif:'Playfair Display',Georgia,serif;--sans:'Jost',sans-serif;
+}
+html{font-size:16px}
+body{
+  background:linear-gradient(165deg,var(--bg) 0%,var(--bg2) 55%,var(--bg3) 100%);
+  color:var(--cream);font-family:var(--sans);
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  padding:2rem 1.25rem 5rem;position:relative;overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.7;
+}
+body::after{
+  content:'';position:fixed;top:-25vh;left:50%;transform:translateX(-50%);
+  width:90vw;height:55vh;
+  background:radial-gradient(ellipse,rgba(255,235,210,0.2) 0%,transparent 70%);
+  pointer-events:none;z-index:0;
+}
+.wrap{position:relative;z-index:1;width:100%;max-width:560px;}
+
+/* HEADER */
+.hdr{text-align:center;padding:1.5rem 0 2rem}
+.hdr-eyebrow{font-family:var(--sans);font-weight:400;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cream);opacity:.85;margin-bottom:1rem;}
+.hdr-title{font-family:var(--serif);font-size:clamp(1.7rem,5vw,2.3rem);font-weight:400;line-height:1.25;color:var(--cream);margin-bottom:.8rem;}
+.hdr-title em{font-style:italic;color:#FFE9D2;}
+.hdr-sub{font-size:.85rem;font-weight:300;color:var(--cream);opacity:.85;line-height:1.7;max-width:380px;margin:0 auto;}
+
+.divider{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);}
+.divider span{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cream);opacity:.85;white-space:nowrap;}
+
+/* CARD */
+.card{background:rgba(255,255,255,0.07);backdrop-filter:blur(6px);border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.card-inner{padding:2rem 2rem 2.5rem}
+
+/* PROGRESS */
+.prog-wrap{margin-bottom:2rem}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem}
+.prog-label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cream);opacity:.7;font-weight:400;}
+.prog-num{font-family:var(--serif);font-style:italic;font-size:.85rem;color:var(--cream);}
+.prog-track{height:2px;background:rgba(255,255,255,.18);border-radius:2px;}
+.prog-fill{height:100%;background:var(--cream);border-radius:2px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+
+/* SCREENS */
+.screen{display:none}
+.screen.active{display:block;animation:fadeUp .4s ease}
+
+/* INTRO */
+.intro-icon{font-size:2.5rem;text-align:center;margin-bottom:1.5rem;display:block;}
+.intro-heading{font-family:var(--serif);font-size:1.5rem;font-weight:400;text-align:center;line-height:1.35;color:var(--cream);margin-bottom:.75rem;}
+.intro-heading em{font-style:italic;color:#FFE9D2}
+.intro-body{font-size:.85rem;font-weight:300;color:var(--cream);opacity:.85;text-align:center;line-height:1.75;margin-bottom:2rem;}
+.steps-row{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2rem;flex-wrap:wrap;}
+.step{display:flex;flex-direction:column;align-items:center;gap:.4rem}
+.step-dot{width:5px;height:5px;border-radius:50%;background:var(--border2);}
+.step-lbl{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);opacity:.75}
+
+/* QUESTION */
+.q-label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:#FFE9D2;margin-bottom:.75rem;font-weight:400;}
+.q-text{font-family:var(--serif);font-size:1.25rem;font-weight:400;line-height:1.4;color:var(--cream);margin-bottom:.4rem;}
+.q-sub{font-size:.8rem;color:var(--cream);opacity:.75;font-weight:300;margin-bottom:1.5rem;line-height:1.6;}
+
+/* OPTIONS */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:2rem}
+@media(max-width:420px){.opts{grid-template-columns:1fr}}
+.opt{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:4px;padding:1rem 1rem .9rem;cursor:pointer;text-align:left;transition:border-color .2s,background .2s,transform .1s;color:var(--cream);font-family:var(--sans);position:relative;overflow:hidden;}
+.opt:hover{border-color:var(--border2);background:rgba(255,255,255,0.1)}
+.opt:active{transform:scale(.98)}
+.opt.selected{border-color:var(--cream);background:rgba(255,255,255,0.16);}
+.opt-icon{font-size:1.4rem;display:block;margin-bottom:.5rem;}
+.opt-name{font-size:.85rem;font-weight:500;color:var(--cream);display:block;margin-bottom:.2rem;}
+.opt-desc{font-size:.72rem;font-weight:300;color:var(--cream);opacity:.7;line-height:1.45}
+
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;gap:.75rem}
+.btn-back{background:transparent;border:1px solid var(--border);color:var(--cream);opacity:.8;padding:.6rem 1.2rem;border-radius:2px;font-family:var(--sans);font-size:.75rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:border-color .2s,opacity .2s;}
+.btn-back:hover{border-color:var(--border2);opacity:1}
+.btn-next{background:var(--cream);border:1px solid var(--cream);color:var(--accent);padding:.6rem 2rem;border-radius:2px;font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn-next:hover{box-shadow:0 6px 18px rgba(0,0,0,.18);transform:translateY(-1px);}
+.btn-next:active{transform:translateY(0)}
+.btn-next:disabled{opacity:.35;cursor:not-allowed;box-shadow:none;transform:none;}
+
+.btn-start{display:block;width:100%;background:var(--cream);border:none;color:var(--accent);padding:.9rem 2rem;border-radius:2px;font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn-start:hover{box-shadow:0 8px 24px rgba(0,0,0,.2);transform:translateY(-1px);}
+
+/* RESULT */
+.result-eyebrow{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#FFE9D2;margin-bottom:.5rem;font-weight:400;}
+.result-title{font-family:var(--serif);font-size:1.5rem;font-weight:400;color:var(--cream);margin-bottom:.6rem;line-height:1.3;}
+.result-title em{font-style:italic;color:#FFE9D2}
+.result-desc{font-size:.85rem;font-weight:300;color:var(--cream);opacity:.88;line-height:1.75;margin-bottom:1.75rem;}
+.meta-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.75rem}
+.meta-chip{border:1px solid var(--border);border-radius:2px;padding:.3rem .75rem;font-size:.67rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cream);opacity:.85;font-weight:400;}
+.acts-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#FFE9D2;margin-bottom:.9rem;font-weight:400;}
+.acts{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.5rem}
+.act{display:grid;grid-template-columns:2.5rem 1fr;gap:.75rem;align-items:start;padding:.9rem 1rem;border:1px solid var(--border);border-radius:4px;background:rgba(255,255,255,0.05);transition:border-color .2s,background .2s;}
+.act:hover{border-color:var(--border2);background:rgba(255,255,255,0.09)}
+.act-icon{font-size:1.25rem;margin-top:.1rem}
+.act-name{font-size:.85rem;font-weight:500;color:var(--cream);margin-bottom:.2rem;font-family:var(--serif);font-style:italic;}
+.act-note{font-size:.72rem;font-weight:300;color:var(--cream);opacity:.78;line-height:1.5}
+.act-bottom{display:flex;align-items:center;justify-content:space-between;gap:.6rem;margin-top:.55rem;flex-wrap:wrap;}
+.act-price{font-size:.68rem;font-weight:500;color:#FFE9D2;letter-spacing:.05em;}
+.act-buy{
+  display:inline-flex;align-items:center;gap:.35rem;
+  background:var(--cream);color:var(--accent);
+  border:none;padding:.4rem .9rem;border-radius:20px;
+  font-family:var(--sans);font-size:.65rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;white-space:nowrap;
+  transition:transform .15s,box-shadow .15s;
+  box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+.act-buy:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(0,0,0,.22);background:#FFEFE6;}
+.act-buy:active{transform:translateY(0)}
+.act-buy svg{width:11px;height:11px;}
+
+.weekly-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:#FFE9D2;margin-bottom:.9rem;font-weight:400;}
+.weekly-acts{display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.5rem}
+.w-act{display:flex;align-items:center;gap:.75rem;padding:.65rem .9rem;border:1px solid var(--border);border-radius:4px;}
+.w-dot{width:4px;height:4px;border-radius:50%;background:var(--cream);flex-shrink:0;}
+.w-text{font-size:.78rem;font-weight:300;color:var(--cream);opacity:.85;line-height:1.4}
+.w-text strong{color:var(--cream);opacity:1;font-weight:500;}
+
+.tip-box{border-left:2px solid var(--cream);padding:.75rem 1rem .75rem 1.25rem;margin-bottom:2rem;background:rgba(255,255,255,0.07);}
+.tip-box p{font-size:.8rem;font-weight:300;color:var(--cream);opacity:.92;line-height:1.65}
+
+.sep{height:1px;background:linear-gradient(90deg,var(--border),transparent);margin-bottom:1.5rem;}
+.btn-restart{background:transparent;border:none;color:var(--cream);opacity:.8;font-family:var(--sans);font-size:.7rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;padding:.5rem 0;transition:opacity .2s;display:inline-flex;align-items:center;gap:.5rem;}
+.btn-restart:hover{opacity:1}
+.btn-restart::before{content:'↺';font-size:1rem}
+
+.footer{margin-top:2.5rem;text-align:center;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cream);opacity:.5;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hdr">
+    <div class="hdr-eyebrow">Viajero Hostels · Huacachina, Peru</div>
+    <h1 class="hdr-title">The desert has<br><em>something for you</em></h1>
+    <p class="hdr-sub">Five questions to find your perfect experience among the dunes of Huacachina.</p>
+  </header>
+
+  <div class="divider"><span>choose your adventure</span></div>
+
+  <div class="card">
+    <div class="card-inner">
+
+      <div class="prog-wrap" id="prog-wrap" style="display:none">
+        <div class="prog-top">
+          <span class="prog-label" id="prog-label">Question 1 of 5</span>
+          <span class="prog-num" id="prog-num">01 / 05</span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+      </div>
+
+      <!-- INTRO -->
+      <div class="screen active" id="s-intro">
+        <span class="intro-icon">🏜️</span>
+        <h2 class="intro-heading">What kind of<br><em>traveler are you today?</em></h2>
+        <p class="intro-body">Huacachina has dunes, desert, sky, and silence. Tell us how you feel and we'll tell you exactly what to do.</p>
+        <div class="steps-row">
+          <div class="step"><div class="step-dot"></div><span class="step-lbl">Energy</span></div>
+          <div class="step"><div class="step-dot"></div><span class="step-lbl">Style</span></div>
+          <div class="step"><div class="step-dot"></div><span class="step-lbl">Company</span></div>
+          <div class="step"><div class="step-dot"></div><span class="step-lbl">Thrill</span></div>
+          <div class="step"><div class="step-dot"></div><span class="step-lbl">Time</span></div>
+        </div>
+        <button class="btn-start" onclick="startQuiz()"><span>Start →</span></button>
+      </div>
+
+      <!-- QUIZ -->
+      <div class="screen" id="s-quiz">
+        <div class="q-label" id="q-step">Question 1</div>
+        <div class="q-text" id="q-text"></div>
+        <div class="q-sub" id="q-sub"></div>
+        <div class="opts" id="opts"></div>
+        <div class="nav">
+          <button class="btn-back" id="btn-back" onclick="prevQ()">← Back</button>
+          <button class="btn-next" id="btn-next" onclick="nextQ()" disabled><span>Next →</span></button>
+        </div>
+      </div>
+
+      <!-- RESULT -->
+      <div class="screen" id="s-result"></div>
+
+    </div>
+  </div>
+
+  <footer class="footer">Viajero Hostels Huacachina · WhatsApp +51 982 541 900</footer>
+
+</div>
+<script>
+const qs=[
+  {
+    text:"How did you arrive at Huacachina?",
+    sub:"Be honest — this tells us everything.",
+    opts:[
+      {i:"⚡",n:"Energized",d:"Ready to move right now",v:"active"},
+      {i:"😌",n:"To relax",d:"I want to pause and breathe",v:"chill"},
+      {i:"🔭",n:"To explore",d:"I want to see everything there is",v:"curious"},
+      {i:"🎉",n:"To have fun",d:"Looking for people, music, energy",v:"social"}
+    ]
+  },
+  {
+    text:"Which image of the desert calls to you most?",
+    sub:"",
+    opts:[
+      {i:"🌅",n:"Sunset over the dunes",d:"Golden light, sand and silence",v:"sunset"},
+      {i:"🏎️",n:"Speed across the dunes",d:"Dust, dirt, and adrenaline",v:"speed"},
+      {i:"🦅",n:"Flying above it all",d:"Seeing the desert from up high",v:"fly"},
+      {i:"🗺️",n:"Getting lost in the unknown",d:"Places few people know about",v:"explore"}
+    ]
+  },
+  {
+    text:"Who are you living this with?",
+    sub:"",
+    opts:[
+      {i:"🧳",n:"Solo",d:"Independent traveler",v:"solo"},
+      {i:"💫",n:"As a couple",d:"A romantic getaway",v:"couple"},
+      {i:"👨‍👩‍👧",n:"With family",d:"Kids or family group",v:"family"},
+      {i:"🎉",n:"With friends",d:"The whole crew",v:"friends"}
+    ]
+  },
+  {
+    text:"How much adrenaline do you want today?",
+    sub:"Choose with your body, not your head.",
+    opts:[
+      {i:"🛋️",n:"None",d:"Relaxed, no surprises",v:"none"},
+      {i:"🌊",n:"A little",d:"Something exciting but gentle",v:"mild"},
+      {i:"🏄",n:"A lot",d:"I want my heart racing",v:"bold"},
+      {i:"🪂",n:"Maximum",d:"The more extreme, the better",v:"extreme"}
+    ]
+  },
+  {
+    text:"How much time do you have?",
+    sub:"So we can build you the perfect plan.",
+    opts:[
+      {i:"⏱️",n:"A few hours",d:"This afternoon or morning",v:"short"},
+      {i:"☀️",n:"Half a day",d:"A full morning or afternoon",v:"half"},
+      {i:"🌅",n:"All day",d:"No rush, just enjoy",v:"full"},
+      {i:"📅",n:"Several days",d:"I want to see all of Huacachina",v:"multi"}
+    ]
+  }
+];
+
+const profiles={
+  aventurero:{
+    ojo:"Profile · Pure Adrenaline",
+    titulo:"The desert like you've never felt it",
+    desc:"You came to Huacachina to feel something real. The dunes are your track, the desert is yours. Here's what you need.",
+    tours:[
+      {i:"🏎️",n:"Buggies & Bodyboarding",t:"The classic Huacachina experience. Every day starting at 4:15pm.",p:"S/. 110 PEN — all included"},
+      {i:"🏂",n:"Pro Sandboarding",t:"The tallest dunes, professional boards, expert instructors. From 3:15pm to 7pm.",p:"S/. 190 PEN"},
+      {i:"🚗",n:"Can Am Polaris",t:"The most extreme buggy in the desert. Drive it yourself or with a professional pilot.",p:"S/. 360 PEN"},
+      {i:"🏍️",n:"Quad bikes (ATVs)",t:"Off-road through the dunes from 9am to 5:30pm.",p:"From S/. 120 PEN"}
+    ],
+    weekly:[
+      {t:"Monday 5pm","a":"Sunset in the Dunes — the best moment to experience the sunset"},
+      {t:"Daily","a":"Meet & Drink 8pm — kicks off the night at the hostel"}
+    ],
+    tip:"Book your tours via WhatsApp: +51 982 541 900. Sunset buggy rides sell out fast."
+  },
+  explorador:{
+    ojo:"Profile · Desert Explorer",
+    titulo:"Beyond the known dunes",
+    desc:"Huacachina holds secrets few people know about. You're the type who wants to find them.",
+    tours:[
+      {i:"🏜️",n:"Cañon de los Perdidos",t:"Private tour for groups of up to 4. Unique rock formations in the desert. Leaves 7:30am, returns 4pm.",p:"S/. 300 PEN p/p — includes snacks and Starlink"},
+      {i:"🏖️",n:"National Reserve Beaches",t:"Pristine coastline that doesn't appear on any tourist map. Full day.",p:"S/. 350 PEN p/p"},
+      {i:"✈️",n:"Flight over the Nazca Lines",t:"See the geoglyphs from the air — one of the world's great mysteries.",p:"$85 USD"},
+      {i:"🚌",n:"Shuttle to Nazca",t:"Round trip from Huacachina to explore the city.",p:"$20 USD"}
+    ],
+    weekly:[
+      {t:"Wednesday 11am","a":"Fruit Testing — discover Peruvian fruits you've never tried"},
+      {t:"Thursday 7pm","a":"VIAJEROlingo: Language Exchange — connect with travelers from around the world"}
+    ],
+    tip:"Cañon de los Perdidos is Huacachina's hidden treasure. Ask at reception about availability."
+  },
+  social:{
+    ojo:"Profile · Social Spirit",
+    titulo:"Huacachina is better with company",
+    desc:"The desert sounds great, but what you really want is people, laughter, and good stories. This one's for you.",
+    tours:[
+      {i:"🏎️",n:"Buggies & Bodyboarding",t:"The perfect activity to make friends in the dunes. Every day at 4:15pm.",p:"S/. 110 PEN"},
+      {i:"🏍️",n:"Quad bikes as a group",t:"Off-road through the dunes — way better with your crew.",p:"From S/. 120 PEN"}
+    ],
+    weekly:[
+      {t:"Monday 9pm","a":"Trivia Night — teams, questions, competition"},
+      {t:"Tuesday 7pm","a":"Make Your Own Sour — learn to make Peru's iconic cocktail"},
+      {t:"Tuesday 9pm","a":"Beerpong Club — a classic"},
+      {t:"Wednesday 9pm","a":"Karaoke Night — no explanation needed"},
+      {t:"Thursday 9pm","a":"DJ Alvaro Guevara — the liveliest night of the week"},
+      {t:"Saturday 9pm","a":"Fans Fest Party & DJ Calvin — the weekend closer"}
+    ],
+    tip:"Meet & Drink at 8pm happens every day — the best place to meet other travelers before the night kicks off."
+  },
+  relax:{
+    ojo:"Profile · Desert Rest",
+    titulo:"The silence of the dunes is yours",
+    desc:"You came to slow down. Huacachina has a quiet, beautiful side that few people discover.",
+    tours:[
+      {i:"🏖️",n:"National Reserve Beaches",t:"Untouched coastline, no crowds, just nature. Full-day trip with transport from the hostel.",p:"S/. 350 PEN p/p"},
+      {i:"🏜️",n:"Cañon de los Perdidos",t:"Private, quiet, full of unique landscapes. For small groups.",p:"S/. 300 PEN p/p"},
+      {i:"🏂",n:"Sunset sandboarding",t:"Climb slowly, fly down. The sunset from the dunes is unmatched.",p:"S/. 190 PEN"}
+    ],
+    weekly:[
+      {t:"Tuesday 11am","a":"Painting Sessions — create something inspired by the desert"},
+      {t:"Wednesday 11am","a":"Fruit Testing — a calm morning discovering Peruvian flavors"},
+      {t:"Sunday 11am","a":"Voleypool Free Time — no competition, just fun"}
+    ],
+    tip:"The sunset from the dunes at 5pm is one of the best you'll ever see. Don't miss it."
+  },
+  nazca:{
+    ojo:"Profile · Beyond the Desert",
+    titulo:"Huacachina is just the beginning",
+    desc:"You're here, but your curiosity goes further. Good — there's a lot more to discover nearby.",
+    tours:[
+      {i:"✈️",n:"Flight over the Nazca Lines",t:"Ancient geoglyphs seen from the air. Departs 9am, 10am, 11am, 12pm or 1pm.",p:"$85 USD (flight included)"},
+      {i:"🚌",n:"Shuttle Huacachina → Nazca",t:"Departs 7am, returns 3pm. With a guide on board.",p:"$20 USD"},
+      {i:"🚌",n:"Shuttle Huacachina → Paracas",t:"Departs 6:45pm, arrives 8pm. To keep moving down the coast.",p:"S/. 45 PEN"},
+      {i:"🚌",n:"Shuttle Huacachina → Lima",t:"Departs 7pm, arrives 11:30pm. Direct to Miraflores or Barranco.",p:"S/. 75 PEN"}
+    ],
+    weekly:[
+      {t:"Thursday 7pm","a":"VIAJEROlingo: Language Exchange — meet travelers with the same spirit"},
+      {t:"Tuesday 11am","a":"Painting Sessions — a creative memory before you move on"}
+    ],
+    tip:"Book your shuttle or Nazca flight in advance. WhatsApp: +51 982 541 900"
+  }
+};
+
+function getProfile(){
+  const energy=answers[0],style=answers[1],adv=answers[3],time=answers[4];
+  if(adv==='extreme'||(adv==='bold'&&style==='speed'))return'aventurero';
+  if(style==='explore'||style==='fly'||(time==='full'||time==='multi')&&energy==='curious')return'explorador';
+  if(energy==='social'||answers[2]==='friends')return'social';
+  if(energy==='chill'||adv==='none')return'relax';
+  if(style==='fly'||time==='multi')return'nazca';
+  return'aventurero';
+}
+
+let answers=[],current=0;
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function startQuiz(){document.getElementById('prog-wrap').style.display='block';show('s-quiz');renderQ();}
+function renderQ(){
+  const q=qs[current];const total=qs.length;
+  const pct=Math.round((current/total)*100);
+  document.getElementById('prog-label').textContent=`Question ${current+1} of ${total}`;
+  document.getElementById('prog-num').textContent=`0${current+1} / 0${total}`;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('q-step').textContent=`Question ${current+1}`;
+  document.getElementById('q-text').textContent=q.text;
+  document.getElementById('q-sub').textContent=q.sub;
+  document.getElementById('btn-back').style.visibility=current===0?'hidden':'visible';
+  const btn=document.getElementById('btn-next');
+  btn.disabled=answers[current]===undefined;
+  btn.querySelector('span').textContent=current===total-1?'See my plan ✦':'Next →';
+  const grid=document.getElementById('opts');grid.innerHTML='';
+  q.opts.forEach(o=>{
+    const el=document.createElement('button');
+    el.className='opt'+(answers[current]===o.v?' selected':'');
+    el.innerHTML=`<span class="opt-icon">${o.i}</span><span class="opt-name">${o.n}</span><span class="opt-desc">${o.d}</span>`;
+    el.onclick=()=>selectOpt(o.v,el);
+    grid.appendChild(el);
+  });
+}
+function selectOpt(v,el){
+  answers[current]=v;
+  document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('btn-next').disabled=false;
+}
+function nextQ(){if(answers[current]===undefined)return;if(current<qs.length-1){current++;renderQ();}else showResult();}
+function prevQ(){if(current>0){current--;renderQ();}}
+function showResult(){
+  document.getElementById('prog-fill').style.width='100%';
+  const p=profiles[getProfile()];
+  const whoMap={solo:'🧳 Solo',couple:'💫 Couple',family:'👨‍👩‍👧 Family',friends:'🎉 Friends'};
+  const timeMap={short:'⏱️ A few hours',half:'☀️ Half a day',full:'🌅 All day',multi:'📅 Several days'};
+  const who=whoMap[answers[2]]||'';const time=timeMap[answers[4]]||'';
+
+  const toursHTML=p.tours.map(a=>`
+    <div class="act">
+      <span class="act-icon">${a.i}</span>
+      <div>
+        <div class="act-name">${a.n}</div>
+        <div class="act-note">${a.t}</div>
+        <div class="act-bottom">
+          <span class="act-price">${a.p}</span>
+          <a class="act-buy" href="https://wa.me/51982541900?text=${encodeURIComponent('Hi! I want to book: '+a.n)}" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.2-.7.9-.9 1.1-.2.2-.3.2-.6.1-.9-.4-1.8-1-2.6-1.8-.7-.7-1.3-1.5-1.8-2.4-.1-.2 0-.4.1-.5.2-.2.5-.5.7-.7.1-.2.1-.3 0-.5-.1-.2-.6-1.5-.8-2-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.7.7-1 1.6-1 2.6.1 1.2.6 2.4 1.4 3.4 1.4 1.9 3.1 3.3 5.2 4.1 1.9.7 2.6.5 3-.1.4-.5.7-1.1.6-1.7-.1-.2-.2-.3-.5-.4zM12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.3L2 22l4.8-1.5c1.5.9 3.3 1.4 5.2 1.4 5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+            Book Here
+          </a>
+        </div>
+      </div>
+    </div>`).join('');
+
+  const weeklyHTML=p.weekly&&p.weekly.length?`
+    <div class="weekly-label">This week at the hostel</div>
+    <div class="weekly-acts">
+      ${p.weekly.map(w=>`
+        <div class="w-act">
+          <div class="w-dot"></div>
+          <div class="w-text"><strong>${w.t}</strong> — ${w.a}</div>
+        </div>`).join('')}
+    </div>`:'';
+
+  document.getElementById('s-result').innerHTML=`
+    <div class="result-eyebrow">${p.ojo}</div>
+    <h2 class="result-title"><em>${p.titulo}</em></h2>
+    <p class="result-desc">${p.desc}</p>
+    <div class="meta-row">
+      <span class="meta-chip">${who}</span>
+      <span class="meta-chip">${time}</span>
+      <span class="meta-chip">📍 Huacachina, Peru</span>
+    </div>
+    <div class="acts-label">Recommended tours for you</div>
+    <div class="acts">${toursHTML}</div>
+    ${weeklyHTML}
+    <div class="tip-box"><p>✦ ${p.tip}</p></div>
+    <div class="sep"></div>
+    <button class="btn-restart" onclick="restart()">Start over</button>
+  `;
+  show('s-result');
+}
+function restart(){answers=[];current=0;document.getElementById('prog-wrap').style.display='none';show('s-intro');}
+</script>
+</body>
+</html>
